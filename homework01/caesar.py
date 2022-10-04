@@ -1,12 +1,16 @@
+import black
+import isort
+
+
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    lowEng="abcdefghijklmnopqrstuvwxyz"
-    upRus="АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    lowEng = "abcdefghijklmnopqrstuvwxyz"
+    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
     lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     ciphertext = ""
-    for i in range (0, len(plaintext)):
+    for i in range(0, len(plaintext)):
         if plaintext[i] in lowEng:
-            ciphertext+=lowEng[(lowEng.find(plaintext[i])+shift)%26]
+            ciphertext += lowEng[(lowEng.find(plaintext[i]) + shift) % 26]
         else:
             if plaintext[i] in upEng:
                 ciphertext += upEng[(upEng.find(plaintext[i]) + shift) % 26]
@@ -20,19 +24,20 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
                         ciphertext += plaintext[i]
     return ciphertext
 
+
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lowEng = "abcdefghijklmnopqrstuvwxyz"
     upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
     lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     plaintext = ""
-    for i in range (0, len(ciphertext)):
+    for i in range(0, len(ciphertext)):
         if ciphertext[i] in lowEng:
-            if lowEng.find(ciphertext[i])-shift<0:
-                ind=26+lowEng.find(ciphertext[i])-shift
+            if lowEng.find(ciphertext[i]) - shift < 0:
+                ind = 26 + lowEng.find(ciphertext[i]) - shift
             else:
-                ind=lowEng.find(ciphertext[i])-shift
-            plaintext+=lowEng[ind]
+                ind = lowEng.find(ciphertext[i]) - shift
+            plaintext += lowEng[ind]
         else:
             if ciphertext[i] in upEng:
                 if upEng.find(ciphertext[i]) - shift < 0:
