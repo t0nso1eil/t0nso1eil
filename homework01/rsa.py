@@ -27,18 +27,18 @@ def gcd(a: int, b: int) -> int:
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     temp = phi
-    x = 1
-    y = 0
-    xx = 0
-    yy = 1
-    while phi != 0:
+    x, xx, y, yy = 1, 0, 0, 1
+    while phi:
+        div = e // phi
         e, phi = phi, e % phi
-        x, xx = xx, x - xx * (e // phi)
-        y, yy = yy, y - yy * (e // phi)
+        x, xx = xx, x - xx * div
+        y, yy = yy, y - yy * div
     return x % temp
 
 
-def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
+def generate_keypair(
+    p: int, q: int
+) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
@@ -62,7 +62,7 @@ def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
 
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     key, n = pk
-    plain = [chr((char**key) % n) for char in ciphertext]
+    plain = [chr((char ** key) % n) for char in ciphertext]
     return "".join(plain)
 
 
