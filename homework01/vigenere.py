@@ -39,52 +39,25 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
-    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lowEng = "abcdefghijklmnopqrstuvwxyz"
-    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
     lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-    plaintext = ""
-    shift = [0] * len(ciphertext)
+    shift = ""
     for i in range(0, len(ciphertext)):
         if keyword[i % len(keyword)] in upEng:
-            shift[i] = upEng.find(keyword[i % len(keyword)])
+            shift += upEng[26 - upEng.find(keyword[i % len(keyword)])]
         else:
             if keyword[i % len(keyword)] in lowEng:
-                shift[i] = lowEng.find(keyword[i % len(keyword)])
+                shift += lowEng[26 - lowEng.find(keyword[i % len(keyword)])]
             else:
                 if keyword[i % len(keyword)] in upRus:
-                    shift[i] = upRus.find(keyword[i % len(keyword)])
+                    shift += upRus[33 - upRus.find(keyword[i % len(keyword)])]
                 else:
                     if keyword[i % len(keyword)] in lowRus:
-                        shift[i] = lowRus.find(keyword[i % len(keyword)])
-    for i in range(0, len(ciphertext)):
-        if ciphertext[i] in lowEng:
-            if lowEng.find(ciphertext[i]) - shift[i] < 0:
-                ind = 26 + lowEng.find(ciphertext[i]) - shift[i]
-            else:
-                ind = lowEng.find(ciphertext[i]) - shift[i]
-            plaintext += lowEng[ind]
-        else:
-            if ciphertext[i] in upEng:
-                if upEng.find(ciphertext[i]) - shift[i] < 0:
-                    ind = 26 + upEng.find(ciphertext[i]) - shift[i]
-                else:
-                    ind = upEng.find(ciphertext[i]) - shift[i]
-                plaintext += upEng[ind]
-            else:
-                if ciphertext[i] in lowRus:
-                    if lowRus.find(ciphertext[i]) - shift[i] < 0:
-                        ind = 33 + lowRus.find(ciphertext[i]) - shift[i]
-                    else:
-                        ind = lowRus.find(ciphertext[i]) - shift[i]
-                    plaintext += lowRus[ind]
-                else:
-                    if ciphertext[i] in upRus:
-                        if upRus.find(ciphertext[i]) - shift[i] < 0:
-                            ind = 33 + upRus.find(ciphertext[i]) - shift[i]
-                        else:
-                            ind = upRus.find(ciphertext[i]) - shift[i]
-                        plaintext += upRus[ind]
-                    else:
-                        plaintext += ciphertext[i]
+                        shift += lowRus[33 - lowRus.find(keyword[i % len(keyword)])]
+    plaintext = encrypt_vigenere(ciphertext, shift)
     return plaintext
+
+
+print(decrypt_vigenere("tfvzzvwkeaqv lq aqvpzf", "lsci"))
