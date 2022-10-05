@@ -46,10 +46,16 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     shift = ""
     for i in range(0, len(ciphertext)):
         if keyword[i % len(keyword)] in upEng:
-            shift += upEng[26 - upEng.find(keyword[i % len(keyword)])]
+            if 26 - upEng.find(keyword[i % len(keyword)])>=0 and 26 - upEng.find(keyword[i % len(keyword)])<=25:
+                shift += upEng[26 - upEng.find(keyword[i % len(keyword)])]
+            else:
+                shift+=upEng[0]
         else:
             if keyword[i % len(keyword)] in lowEng:
-                shift += lowEng[26 - lowEng.find(keyword[i % len(keyword)])]
+                if 26 - lowEng.find(keyword[i % len(keyword)]) >= 0 and 26 - lowEng.find(keyword[i % len(keyword)]) <= 25:
+                    shift += lowEng[26 - lowEng.find(keyword[i % len(keyword)])]
+                else:
+                    shift += lowEng[0]
             else:
                 if keyword[i % len(keyword)] in upRus:
                     shift += upRus[33 - upRus.find(keyword[i % len(keyword)])]
