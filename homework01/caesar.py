@@ -2,10 +2,10 @@ import black
 import isort
 
 
-def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
-    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+def encrypt_caesar(plaintext: str, shift: int) -> str:
+    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lowEng = "abcdefghijklmnopqrstuvwxyz"
-    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
     lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     ciphertext = ""
     for i in range(0, len(plaintext)):
@@ -25,40 +25,6 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     return ciphertext
 
 
-def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
-    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    lowEng = "abcdefghijklmnopqrstuvwxyz"
-    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-    lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-    plaintext = ""
-    for i in range(0, len(ciphertext)):
-        if ciphertext[i] in lowEng:
-            if lowEng.find(ciphertext[i]) - shift < 0:
-                ind = 26 + lowEng.find(ciphertext[i]) - shift
-            else:
-                ind = lowEng.find(ciphertext[i]) - shift
-            plaintext += lowEng[ind]
-        else:
-            if ciphertext[i] in upEng:
-                if upEng.find(ciphertext[i]) - shift < 0:
-                    ind = 26 + upEng.find(ciphertext[i]) - shift
-                else:
-                    ind = upEng.find(ciphertext[i]) - shift
-                plaintext += upEng[ind]
-            else:
-                if ciphertext[i] in lowRus:
-                    if lowRus.find(ciphertext[i]) - shift < 0:
-                        ind = 33 + lowRus.find(ciphertext[i]) - shift
-                    else:
-                        ind = lowRus.find(ciphertext[i]) - shift
-                    plaintext += lowRus[ind]
-                else:
-                    if ciphertext[i] in upRus:
-                        if upRus.find(ciphertext[i]) - shift < 0:
-                            ind = 33 + upRus.find(ciphertext[i]) - shift
-                        else:
-                            ind = upRus.find(ciphertext[i]) - shift
-                        plaintext += upRus[ind]
-                    else:
-                        plaintext += ciphertext[i]
+def decrypt_caesar(ciphertext: str, shift: int) -> str:
+    plaintext = encrypt_caesar(ciphertext, -shift)
     return plaintext
