@@ -58,6 +58,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
                         shift += lowRus[33 - lowRus.find(keyword[i % len(keyword)])]
     plaintext = encrypt_vigenere(ciphertext, shift)
     return plaintext
-
-
-print(decrypt_vigenere("tfvzzvwkeaqv lq aqvpzf", "lsci"))
