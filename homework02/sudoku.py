@@ -139,12 +139,10 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """Генерация судоку заполненного на N элементов"""
-    grid = [[]]
-    for i in range(0, 8):
-        for j in range(0, 8):
-            grid.append(".")
-    solve(grid)
-    for i in range(0, 81 - N):
+    grid = [["." for i in range(0, 9)] for j in range(0, 9)]
+    grid = solve(grid)
+    display(grid)
+    for k in range(0, 81 - N):
         i = randint(0, 8)
         j = randint(0, 8)
         while grid[i][j] == ".":
