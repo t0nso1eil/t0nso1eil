@@ -90,31 +90,33 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    """Решение пазла, заданного в grid"""
-    """ Как решать Судоку?
-        1. Найти свободную позицию
-        2. Найти все возможные значения, которые могут находиться на этой позиции
-        3. Для каждого возможного значения:
-            3.1. Поместить это значение на эту позицию
-            3.2. Продолжить решать оставшуюся часть пазла
-    """
-    pos = find_empty_positions(grid)
-    if pos == None:
-        return grid
-    else:
-        t = find_possible_values(grid, pos)
-        if t == None:
+    def solvee(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+        """Решение пазла, заданного в grid"""
+        """ Как решать Судоку?
+            1. Найти свободную позицию
+            2. Найти все возможные значения, которые могут находиться на этой позиции
+            3. Для каждого возможного значения:
+                3.1. Поместить это значение на эту позицию
+                3.2. Продолжить решать оставшуюся часть пазла
+        """
+        pos = find_empty_positions(grid)
+        if pos == None:
             return grid
         else:
-            for i in t:
-                temp = grid[pos[0]][pos[1]]
-                grid[pos[0]][pos[1]] = str(i)
-                grid = solve(grid)
-                if find_empty_positions(grid) == None:
-                    return grid
-                grid[pos[0]][pos[1]] = temp
-        return grid
-    return None
+            t = find_possible_values(grid, pos)
+            if t == None:
+                return grid
+            else:
+                for i in t:
+                    temp = grid[pos[0]][pos[1]]
+                    grid[pos[0]][pos[1]] = str(i)
+                    grid = solve(grid)
+                    if find_empty_positions(grid) == None:
+                        return grid
+                    grid[pos[0]][pos[1]] = temp
+            return grid
+        return None
+    return solvee(grid)
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
