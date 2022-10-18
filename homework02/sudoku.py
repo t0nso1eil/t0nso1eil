@@ -91,7 +91,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return res
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
+def solve(grid: tp.List[tp.List[str]]):
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -114,7 +114,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
                 if find_empty_positions(grid) == None:
                     return grid
                 grid[pos[0]][pos[1]] = "."
-        return grid
+    return grid
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
