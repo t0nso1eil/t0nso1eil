@@ -67,10 +67,10 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
 
 def find_empty_positions(
     grid: tp.List[tp.List[str]],
-) -> tp.Tuple[int, int]:
+) -> tp.Optional[tp.Tuple[int, int]]:
     """Найти первую свободную позицию в пазле"""
     for i in range(0, len(grid)):
-        for j in range(0, len(grid[0])):
+        for j in range(0, len(grid[i])):
             if grid[i][j] == ".":
                 return i, j
     return None
@@ -115,7 +115,6 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
                     return grid
                 grid[pos[0]][pos[1]] = "."
         return grid
-    return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
