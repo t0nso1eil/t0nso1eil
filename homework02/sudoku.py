@@ -65,9 +65,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return arr
 
 
-def find_empty_positions(
-    grid: tp.List[tp.List[str]],
-) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(grid: tp.List[tp.List[str]]):
     """Найти первую свободную позицию в пазле"""
     for i in range(0, len(grid)):
         for j in range(0, len(grid[i])):
@@ -134,7 +132,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     return True
 
 
-def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
+def generate_sudoku(N: int):
     """Генерация судоку заполненного на N элементов"""
     grid = [["." for i in range(0, 9)] for j in range(0, 9)]
     solve(grid)
