@@ -76,8 +76,10 @@ def find_empty_positions(
     return None
 
 
+base = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
+
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
-    base = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
     res = set()
     for i in base:
         if (
@@ -98,23 +100,26 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
             3.1. Поместить это значение на эту позицию
             3.2. Продолжить решать оставшуюся часть пазла
     """
-    pos = find_empty_positions(grid)
-    if pos == None:
-        return grid
-    else:
-        t = find_possible_values(grid, pos)
-        if t == None:
-            return grid
+    def solvee(grid1: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+        pos = find_empty_positions(grid1)
+        if pos == None:
+            return grid1
         else:
-            for i in t:
-                temp = grid[pos[0]][pos[1]]
-                grid[pos[0]][pos[1]] = str(i)
-                grid = solve(grid)
-                if find_empty_positions(grid) == None:
-                    return grid
-                grid[pos[0]][pos[1]] = temp
-        return grid
-    return None
+            t = find_possible_values(grid1, pos)
+            if t == None:
+                return grid1
+            else:
+                for i in t:
+                    temp = grid1[pos[0]][pos[1]]
+                    grid1[pos[0]][pos[1]] = str(i)
+                    grid = solve(grid1)
+                    if find_empty_positions(grid1) == None:
+                        return grid1
+                    grid1[pos[0]][pos[1]] = temp
+            return grid1
+        return None
+
+    return solvee(grid)
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
