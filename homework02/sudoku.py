@@ -92,26 +92,31 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    def solvee(grid1: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-        pos = find_empty_positions(grid1)
-        if pos == None:
-            return grid1
+    """Решение пазла, заданного в grid"""
+    """ Как решать Судоку?
+        1. Найти свободную позицию
+        2. Найти все возможные значения, которые могут находиться на этой позиции
+        3. Для каждого возможного значения:
+            3.1. Поместить это значение на эту позицию
+            3.2. Продолжить решать оставшуюся часть пазла
+    """
+    pos = find_empty_positions(grid)
+    if pos == None:
+        return grid
+    else:
+        t = find_possible_values(grid, pos)
+        if t == None:
+            return grid
         else:
-            t = find_possible_values(grid1, pos)
-            if t == None:
-                return grid1
-            else:
-                for i in t:
-                    temp = grid1[pos[0]][pos[1]]
-                    grid1[pos[0]][pos[1]] = str(i)
-                    grid = solve(grid1)
-                    if find_empty_positions(grid1) == None:
-                        return grid1
-                    grid1[pos[0]][pos[1]] = temp
-            return grid1
-        return None
-
-    return solvee(grid)
+            for i in t:
+                temp = grid[pos[0]][pos[1]]
+                grid[pos[0]][pos[1]] = str(i)
+                grid = solve(grid)
+                if find_empty_positions(grid) == None:
+                    return grid
+                grid[pos[0]][pos[1]] = temp
+        return grid
+    return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
@@ -134,7 +139,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """Генерация судоку заполненного на N элементов"""
     grid = [["." for i in range(0, 9)] for j in range(0, 9)]
-    grid = solve(grid)
+    solve(grid)
     for k in range(0, 81 - N):
         i = randint(0, 8)
         j = randint(0, 8)
