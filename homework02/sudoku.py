@@ -100,6 +100,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
             3.1. Поместить это значение на эту позицию
             3.2. Продолжить решать оставшуюся часть пазла
     """
+    
     def solvee(grid1: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         pos = find_empty_positions(grid1)
         if pos == None:
