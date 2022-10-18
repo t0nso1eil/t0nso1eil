@@ -117,7 +117,6 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
             return grid
         return None
 
-
     return solvee(grid)
 
 
