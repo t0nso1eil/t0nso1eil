@@ -1,10 +1,8 @@
 import random
 import time
 import typing as tp
-from turtledemo.forest import randomize
 
 import pygame
-import self as self
 from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
