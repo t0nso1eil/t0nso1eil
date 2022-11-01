@@ -1,6 +1,6 @@
 import abc
 
-from life import GameOfLife
+from homework03.life import GameOfLife
 
 
 class UI(abc.ABC):
