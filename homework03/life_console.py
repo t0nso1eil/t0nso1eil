@@ -16,16 +16,16 @@ class Console(UI):
     def draw_grid(self, screen) -> None:
         for i in range(0, self.life.rows):
             for j in range(0, self.life.cols):
-                screen.move(i+1,j+1)
-                if self.life.curr_generation[j][i]==1:
+                screen.move(i + 1, j + 1)
+                if self.life.curr_generation[j][i] == 1:
                     screen.addch("*")
                 else:
                     screen.addch(" ")
 
     def run(self) -> None:
-        screen=curses.initscr()
+        screen = curses.initscr()
         curses.resize_term(self.life.rows + 5, self.life.cols + 5)
-        running=True
+        running = True
         while running:
             self.draw_borders(screen)
             self.draw_grid(screen)
