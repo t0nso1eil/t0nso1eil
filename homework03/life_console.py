@@ -32,4 +32,4 @@ class Console(UI):
             self.life.step()
             time.sleep(0.2)
             screen.refresh()
-        curses.edwin()
+        curses.endwin()
