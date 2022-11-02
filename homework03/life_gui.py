@@ -1,3 +1,4 @@
+import argparse
 import time
 
 import pygame
@@ -48,6 +49,7 @@ class GUI(UI):
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
         self.screen.fill(pygame.Color("white"))
+        pause = False
 
         self.grid = self.life.create_grid(randomize=True)
 
@@ -56,9 +58,22 @@ class GUI(UI):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    x = event.pos[0]
+                    y = event.pos[1]
+                    x = (x - 1) // self.cell_size
+                    y = (y - 1) // self.cell_size
+                    self.life.curr_generation[y][x] = 1
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        if pause:
+                            pause = False
+                        else:
+                            pause = True
             self.draw_grid()
             self.draw_lines()
-            self.life.step()
+            if not pause:
+                self.life.step()
             pygame.display.flip()
             clock.tick(self.speed)
         pygame.quit()
