@@ -21,18 +21,12 @@ class GameOfLife:
         self.generations = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
-        grid: Grid = []
         if randomize:
-            for i in range(0, self.rows):
-                grid.append([])
-                for j in range(0, self.cols):
-                    grid[i].append(random.randint(0, 1))
+            return [
+                [random.randint(0, 1) for i in range(0, self.rows)] for j in range(0, self.cols)
+            ]
         else:
-            for i in range(0, self.rows):
-                grid.append([])
-                for j in range(0, self.cols):
-                    grid[i].append(0)
-        return grid
+            return [[0 for i in range(0, self.rows)] for j in range(0, self.cols)]
 
     def get_neighbours(self, cell: Cell) -> Cells:
         i, j = cell
@@ -87,7 +81,7 @@ class GameOfLife:
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
         f = open(filename)
-        grid = []
+        grid: Grid = []
         lines = f.readlines()
         height = 0
         width = 0
