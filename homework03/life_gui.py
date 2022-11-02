@@ -2,6 +2,7 @@ import argparse
 import time
 
 import pygame
+from pygame import QUIT
 from pygame.locals import *
 
 from homework03.life import GameOfLife
