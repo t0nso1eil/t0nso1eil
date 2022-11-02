@@ -23,8 +23,7 @@ class GameOfLife:
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
             return [
-                [random.randint(0, 1) for i in range(0, self.rows)]
-                for j in range(0, self.cols)
+                [random.randint(0, 1) for i in range(0, self.rows)] for j in range(0, self.cols)
             ]
         else:
             return [[0 for i in range(0, self.rows)] for j in range(0, self.cols)]
@@ -53,9 +52,7 @@ class GameOfLife:
         return poss
 
     def get_next_generation(self) -> Grid:
-        grid = [
-            [0] * len(self.curr_generation[0]) for i in range(len(self.curr_generation))
-        ]
+        grid = [[0] * len(self.curr_generation[0]) for i in range(len(self.curr_generation))]
         for i in range(0, len(self.curr_generation)):
             for j in range(0, len(self.curr_generation[0])):
                 n = self.get_neighbours((i, j)).count(1)
