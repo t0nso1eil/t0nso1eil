@@ -75,9 +75,7 @@ def write_index(gitdir: pathlib.Path, entries: tp.List[GitIndexEntry]) -> None:
             f.write(i.pack())
             hash += i.pack()
         temp = str(hashlib.sha1(hash).hexdigest())
-        f.write(
-            struct.pack(f"!{len(bytearray.fromhex(temp))}s", bytearray.fromhex(temp))
-        )
+        f.write(struct.pack(f"!{len(bytearray.fromhex(temp))}s", bytearray.fromhex(temp)))
 
 
 def ls_files(gitdir: pathlib.Path, details: bool = False) -> None:
@@ -88,9 +86,7 @@ def ls_files(gitdir: pathlib.Path, details: bool = False) -> None:
             print(i.name)
 
 
-def update_index(
-    gitdir: pathlib.Path, paths: tp.List[pathlib.Path], write: bool = True
-) -> None:
+def update_index(gitdir: pathlib.Path, paths: tp.List[pathlib.Path], write: bool = True) -> None:
     if (gitdir / "index").exists():
         files = read_index(gitdir)
     else:
