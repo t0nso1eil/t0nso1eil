@@ -4,7 +4,7 @@ import shutil
 import typing as tp
 
 from pyvcs.index import read_index, update_index
-from pyvcs.objects import find_tree_files, read_object, commit_parse
+from pyvcs.objects import commit_parse, find_tree_files, read_object
 from pyvcs.tree import commit_tree, write_tree
 
 
