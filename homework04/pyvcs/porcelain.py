@@ -36,9 +36,9 @@ def checkout(gitdir: pathlib.Path, obname: str) -> None:
     with objfile.open("rb") as f:
         com = f.read()
     for i in find_tree_files(commit_parse(com).decode(), gitdir):
-        name = i[0].split("/")
-        if len(name) > 1:
-            pathlib.Path(name[0]).absolute().mkdir()
-        with open(i[0], "w") as tree_path:
+        if "/" in i[0]:
+            dir_name = i[0][: i[0].find("/")]
+            pathlib.Path(dir_name).absolute().mkdir()
+        with open(i[0], "w") as file:
             content = read_object(i[1], gitdir)[1]
-            tree_path.write(content.decode())
+            file.write(content.decode())
