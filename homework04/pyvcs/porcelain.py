@@ -4,7 +4,7 @@ import shutil
 import typing as tp
 
 from pyvcs.index import read_index, update_index
-from pyvcs.objects import commit_parse, find_object, find_tree_files, read_object
+from pyvcs.objects import find_tree_files, read_object, commit_parse
 from pyvcs.tree import commit_tree, write_tree
 
 
@@ -18,11 +18,11 @@ def commit(gitdir: pathlib.Path, message: str, author: tp.Optional[str] = None) 
     )
 
 
-def checkout(gitdir: pathlib.Path, obname: str) -> None:
-    head = gitdir / "refs" / "heads" / obname
+def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
+    head = gitdir / "refs" / "heads" / obj_name
     if head.exists():
         with head.open("r") as f:
-            obname = f.read()
+            obj_name = f.read()
     index = read_index(gitdir)
     for i in index:
         if pathlib.Path(i.name).is_file():
@@ -32,13 +32,13 @@ def checkout(gitdir: pathlib.Path, obname: str) -> None:
             else:
                 os.chmod(i.name, 0o777)
                 os.remove(i.name)
-    objfile = gitdir / "objects" / obname[:2] / obname[2:]
-    with objfile.open("rb") as f:
-        com = f.read()
+    obj_path = gitdir / "objects" / obj_name[:2] / obj_name[2:]
+    with obj_path.open("rb") as obj_file:
+        com = obj_file.read()
     for i in find_tree_files(commit_parse(com).decode(), gitdir):
-        if "/" in i[0]:
-            dir_name = i[0][: i[0].find("/")]
-            pathlib.Path(dir_name).absolute().mkdir()
-        with open(i[0], "w") as file:
-            content = read_object(i[1], gitdir)[1]
-            file.write(content.decode())
+        name = i[0].split("/")
+        if len(name) > 1:
+            pathlib.Path(name[0]).absolute().mkdir()
+        with open(i[0], "w") as tree_path:
+            header, content = read_object(i[1], gitdir)
+            tree_path.write(content.decode())
