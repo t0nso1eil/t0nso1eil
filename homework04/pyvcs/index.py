@@ -51,7 +51,7 @@ class GitIndexEntry(tp.NamedTuple):
 
 
 def read_index(gitdir: pathlib.Path) -> tp.List[GitIndexEntry]:
-    res = []
+    res: tp.List[GitIndexEntry] = []
     try:
         with open(gitdir / "index", "rb") as f:
             data = f.read()
