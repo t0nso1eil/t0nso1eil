@@ -73,8 +73,9 @@ def get_mutual(
     url = f"{domain}/friends.getMutual"
     arrmutual = []
     if target_uids is None:
-        target_uids = [target_uid]
-    count = (len(target_uids) / 100).__ceil__()
+        count = 1
+    else:
+        count = (len(target_uids) / 100).__ceil__()
     for i in range(0, count):
         response = requests.get(
             url,
