@@ -3,6 +3,7 @@ import typing as tp
 
 import requests
 
+
 class Session:
     """
     Сессия.
