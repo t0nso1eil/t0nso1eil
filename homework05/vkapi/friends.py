@@ -10,7 +10,7 @@ from vkapi.config import VK_CONFIG
 @dataclasses.dataclass(frozen=True)
 class FriendsResponse:
     count: int
-    items: tp.Dict[str, tp.Any]
+    items: tp.Dict[str, tp.Any]  #type: ignore
 
 
 def get_friends(
