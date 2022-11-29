@@ -36,9 +36,7 @@ class Session:
             count = 0
             for i in range(0, self.max_retries + 1):
                 try:
-                    response = requests.get(
-                        f"{self.base_url}/{url}", timeout=self.timeout
-                    )
+                    response = requests.get(f"{self.base_url}/{url}", timeout=self.timeout)
                     response.raise_for_status()
                     return response
                 except requests.exceptions.HTTPError:
@@ -56,9 +54,7 @@ class Session:
             count = 0
             for i in range(0, self.max_retries + 1):
                 try:
-                    response = requests.post(
-                        f"{self.base_url}/{url}", timeout=self.timeout
-                    )
+                    response = requests.get(f"{self.base_url}/{url}", timeout=self.timeout)
                     response.raise_for_status()
                     return response
                 except requests.exceptions.HTTPError:
