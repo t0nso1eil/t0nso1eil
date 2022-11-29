@@ -63,4 +63,3 @@ class Session:
                 raise requests.exceptions.ConnectionError
             except requests.exceptions.ReadTimeout:
                 raise requests.exceptions.ReadTimeout
-        return response        
