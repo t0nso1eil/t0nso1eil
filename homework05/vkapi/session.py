@@ -26,39 +26,49 @@ class Session:
         self.backoff_factor = backoff_factor
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        count = 0
-        for i in range(0, self.max_retries + 1):
-            try:
-                response = requests.get(f"{self.base_url}/{url}", timeout=self.timeout)
-                response.raise_for_status()
-                return response
-            except requests.exceptions.HTTPError:
-                if self.max_retries == 1:
-                    raise requests.exceptions.HTTPError
-                if count >= self.max_retries:
-                    raise requests.exceptions.RetryError
-                time.sleep((self.backoff_factor * (2**count)).__round__())
-                count += 1
-            except requests.exceptions.ConnectionError:
-                raise requests.exceptions.ConnectionError
-            except requests.exceptions.ReadTimeout:
-                raise requests.exceptions.ReadTimeout
-                
+        return self.for_black_only(url, "get")
+
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        count = 0
-        for i in range(0, self.max_retries + 1):
-            try:
-                response = requests.post(f"{self.base_url}/{url}", timeout=self.timeout)
-                response.raise_for_status()
-                return response
-            except requests.exceptions.HTTPError:
-                if self.max_retries == 1:
-                    raise requests.exceptions.HTTPError
-                if count >= self.max_retries:
-                    raise requests.exceptions.RetryError
-                time.sleep((self.backoff_factor * (2**count)).__round__())
-                count += 1
-            except requests.exceptions.ConnectionError:
-                raise requests.exceptions.ConnectionError
-            except requests.exceptions.ReadTimeout:
-                raise requests.exceptions.ReadTimeout
+        return self.for_black_only(url, "post")
+
+    def for_black_only(self, url: str, type: str):
+        if type == "get":
+            count = 0
+            for i in range(0, self.max_retries + 1):
+                try:
+                    response = requests.get(
+                        f"{self.base_url}/{url}", timeout=self.timeout
+                    )
+                    response.raise_for_status()
+                    return response
+                except requests.exceptions.HTTPError:
+                    if self.max_retries == 1:
+                        raise requests.exceptions.HTTPError
+                    if count >= self.max_retries:
+                        raise requests.exceptions.RetryError
+                    time.sleep((self.backoff_factor * (2**count)).__round__())
+                    count += 1
+                except requests.exceptions.ConnectionError:
+                    raise requests.exceptions.ConnectionError
+                except requests.exceptions.ReadTimeout:
+                    raise requests.exceptions.ReadTimeout
+        else:
+            count = 0
+            for i in range(0, self.max_retries + 1):
+                try:
+                    response = requests.post(
+                        f"{self.base_url}/{url}", timeout=self.timeout
+                    )
+                    response.raise_for_status()
+                    return response
+                except requests.exceptions.HTTPError:
+                    if self.max_retries == 1:
+                        raise requests.exceptions.HTTPError
+                    if count >= self.max_retries:
+                        raise requests.exceptions.RetryError
+                    time.sleep((self.backoff_factor * (2**count)).__round__())
+                    count += 1
+                except requests.exceptions.ConnectionError:
+                    raise requests.exceptions.ConnectionError
+                except requests.exceptions.ReadTimeout:
+                    raise requests.exceptions.ReadTimeout
