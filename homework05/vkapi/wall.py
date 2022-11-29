@@ -6,6 +6,7 @@ import requests
 from pandas import json_normalize
 from vkapi.config import VK_CONFIG
 
+
 def get_posts_2500(
     owner_id: str = "",
     domain: str = "",
