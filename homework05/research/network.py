@@ -18,8 +18,8 @@ def ego_network(
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
     if friends == None:
-        friends = get_friends(user_id).items
-    mutual = get_mutual(source_uid=friends[0], target_uids=friends)
+        friends = get_friends(int(user_id)).items
+    mutual = get_mutual(source_uid=user_id, target_uids=friends)
     network = []
     for i in range(0, len(mutual)):
         for j in range(0, len(mutual[i]["common_friends"])):
