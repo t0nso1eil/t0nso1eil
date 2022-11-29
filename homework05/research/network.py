@@ -19,11 +19,11 @@ def ego_network(
     """
     if friends == None:
         friends = get_friends(int(user_id)).items
-    mutual: tp.List[tp.List[str]] = get_mutual(source_uid=user_id, target_uids=friends)
+    mutual = get_mutual(source_uid=friends[0], target_uids=friends)
     network = []
-    for i in range(0, len(mutual)):
-        for j in range(0, len(mutual[i]["common_friends"])):
-            network.append((mutual[i]["id"], mutual[i]["common_friends"][j]))
+    for i in mutual:
+        for j in i["common_friends"]:
+            network.append((i["id"], j))
     return network
 
 
