@@ -17,8 +17,6 @@ def ego_network(
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    if friends == None:
-        friends = get_friends(int(user_id)).items
     mutual = get_mutual(source_uid=user_id, target_uids=friends)
     network = []
     for i in mutual:
