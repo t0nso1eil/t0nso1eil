@@ -19,7 +19,7 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     currage = dt.datetime.now().year
     for i in friends:
         try:
-            sumage += currage - int(i["bdate"][5:])
+            sumage += int(currage - int(i["bdate"][5:]))
             count += 1
         except:
             pass
