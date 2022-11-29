@@ -1,9 +1,9 @@
 import time
 import typing as tp
+
 import pandas as pd
 import requests
 from pandas import json_normalize
-
 from vkapi.config import VK_CONFIG
 
 def get_posts_2500(
