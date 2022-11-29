@@ -44,6 +44,7 @@ class Session:
             except requests.exceptions.ReadTimeout:
                 raise requests.exceptions.ReadTimeout
         return response        
+    
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
         count = 0
