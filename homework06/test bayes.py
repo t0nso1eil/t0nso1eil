@@ -1,6 +1,8 @@
 from string import punctuation
+
 from sklearn.metrics import accuracy_score
 from bayes import NaiveBayesClassifier
+
 
 def read_sms():
     with open("data/SMSSpamCollection", "r", encoding="utf-8") as f:
