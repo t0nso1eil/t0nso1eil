@@ -19,8 +19,14 @@ def extract_news(parser: BeautifulSoup) -> list:
         author = sub_line.find("a", {"class": "hnuser"}).text
         url = title_line.find("a")["href"]
         # comments = sub_line.find("comment").text[:sub_line.find("comment").text.find("&")]
-        comments = sub_line.find("a")[-1].text
-        print(comments)
+        # comments = sub_line.find("a")[-1].text
+        # comments = 0
+        if sub_line.findAll("a")[-1].text == "discuss":
+            comments = 0
+        else:
+            temp = sub_line.findAll("a")[-1].text
+            comments = int(temp.split()[0])
+            print(comments)
         points = sub_line.find("span", {"class": "score"}).text
         news.append(
             {
