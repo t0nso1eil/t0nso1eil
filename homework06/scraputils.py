@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def extract_news(parser: BeautifulSoup) -> list:
-    """ Extract news from https://news.ycombinator.com/newest site"""
+    """Extract news from https://news.ycombinator.com/newest site"""
     news = []
     title_lines = list(
         map(
@@ -35,18 +35,12 @@ def extract_news(parser: BeautifulSoup) -> list:
 
 
 def extract_next_page(parser: BeautifulSoup) -> str:
-    """ Extract next page URL """
-    return (
-        parser.table.findAll("table")[1]
-        .findAll("tr")[-1]
-        .contents[2]
-        .find("a")
-        .get("href")
-    )
+    """Extract next page URL"""
+    return parser.table.findAll("table")[1].findAll("tr")[-1].contents[2].find("a").get("href")
 
 
 def get_news(url, n_pages=1):
-    """ Collect news from a given web page """
+    """Collect news from a given web page"""
     news = []
     for i in range(0, n_pages):
         response = requests.get(url)
