@@ -1,6 +1,7 @@
 from string import punctuation
 
 from sklearn.metrics import accuracy_score
+
 from bayes import NaiveBayesClassifier
 
 
