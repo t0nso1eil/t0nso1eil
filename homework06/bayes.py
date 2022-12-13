@@ -37,10 +37,7 @@ class NaiveBayesClassifier:
                 for word in texts[i].split():
                     prob += math.log(
                         (self.word_dict[type][word] + self.alpha)
-                        / (
-                            sum(self.word_dict[type].values())
-                            + self.alpha * len(self.words)
-                        )
+                        / (sum(self.word_dict[type].values()) + self.alpha * len(self.words))
                     )
                 print(prob)
                 if prob > max_prob:
