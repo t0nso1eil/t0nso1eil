@@ -6,6 +6,7 @@ Base = declarative_base()
 engine = create_engine("sqlite:///news.db")
 Session = sessionmaker(bind=engine)
 
+
 class News(Base):
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
