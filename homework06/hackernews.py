@@ -1,9 +1,9 @@
 from urllib.parse import parse_qs
 
-from bottle import redirect, request, route, run, template
 from bayes import NaiveBayesClassifier
-from db import News, Session
+from bottle import redirect, request, route, run, template
 from scraputils import get_news
+from db import News, Session
 
 
 @route("/")
