@@ -42,7 +42,7 @@ def extract_news(parser: BeautifulSoup) -> list:
 
 def extract_next_page(parser: BeautifulSoup) -> str:
     """Extract next page URL"""
-    return parser.table.findAll("table")[1].findAll("tr")[-1].contents[2].find("a").get("href")
+    return parser.find("a", {"class": "morelink"})["href"]
 
 
 def get_news(url, n_pages=1):
