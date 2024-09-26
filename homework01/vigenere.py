@@ -1,30 +1,72 @@
-def encrypt_vigenere(plaintext: str, keyword: str) -> str:
-    """
-    Encrypts plaintext using a Vigenere cipher.
+import black
+import isort
 
-    >>> encrypt_vigenere("PYTHON", "A")
-    'PYTHON'
-    >>> encrypt_vigenere("python", "a")
-    'python'
-    >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
-    'LXFOPVEFRNHR'
-    """
+
+def encrypt_vigenere(plaintext: str, keyword: str) -> str:
+    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lowEng = "abcdefghijklmnopqrstuvwxyz"
+    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    shift = [0] * len(plaintext)
+    for i in range(0, len(plaintext)):
+        if keyword[i % len(keyword)] in upEng:
+            shift[i] = upEng.find(keyword[i % len(keyword)])
+        else:
+            if keyword[i % len(keyword)] in lowEng:
+                shift[i] = lowEng.find(keyword[i % len(keyword)])
+            else:
+                if keyword[i % len(keyword)] in upRus:
+                    shift[i] = upRus.find(keyword[i % len(keyword)])
+                else:
+                    if keyword[i % len(keyword)] in lowRus:
+                        shift[i] = lowRus.find(keyword[i % len(keyword)])
+    for i in range(0, len(plaintext)):
+        if plaintext[i] in lowEng:
+            ciphertext += lowEng[(lowEng.find(plaintext[i]) + shift[i]) % 26]
+        else:
+            if plaintext[i] in upEng:
+                ciphertext += upEng[(upEng.find(plaintext[i]) + shift[i]) % 26]
+            else:
+                if plaintext[i] in lowRus:
+                    ciphertext += lowRus[(lowRus.find(plaintext[i]) + shift[i]) % 33]
+                else:
+                    if plaintext[i] in upRus:
+                        ciphertext += upRus[(upRus.find(plaintext[i]) + shift[i]) % 33]
+                    else:
+                        ciphertext += plaintext[i]
     return ciphertext
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
-    """
-    Decrypts a ciphertext using a Vigenere cipher.
-
-    >>> decrypt_vigenere("PYTHON", "A")
-    'PYTHON'
-    >>> decrypt_vigenere("python", "a")
-    'python'
-    >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
-    'ATTACKATDAWN'
-    """
-    plaintext = ""
-    # PUT YOUR CODE HERE
+    upEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lowEng = "abcdefghijklmnopqrstuvwxyz"
+    upRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+    lowRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    shift = ""
+    for i in range(0, len(ciphertext)):
+        if keyword[i % len(keyword)] in upEng:
+            if (
+                26 - upEng.find(keyword[i % len(keyword)]) >= 0
+                and 26 - upEng.find(keyword[i % len(keyword)]) <= 25
+            ):
+                shift += upEng[26 - upEng.find(keyword[i % len(keyword)])]
+            else:
+                shift += upEng[0]
+        else:
+            if keyword[i % len(keyword)] in lowEng:
+                if (
+                    26 - lowEng.find(keyword[i % len(keyword)]) >= 0
+                    and 26 - lowEng.find(keyword[i % len(keyword)]) <= 25
+                ):
+                    shift += lowEng[26 - lowEng.find(keyword[i % len(keyword)])]
+                else:
+                    shift += lowEng[0]
+            else:
+                if keyword[i % len(keyword)] in upRus:
+                    shift += upRus[33 - upRus.find(keyword[i % len(keyword)])]
+                else:
+                    if keyword[i % len(keyword)] in lowRus:
+                        shift += lowRus[33 - lowRus.find(keyword[i % len(keyword)])]
+    plaintext = encrypt_vigenere(ciphertext, shift)
     return plaintext
